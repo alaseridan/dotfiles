@@ -1,0 +1,40 @@
+map gi :vsc Edit.GoToImplementation<CR>
+map gr :vsc Edit.FindAllReferences<CR>
+map gp :vsc Edit.PeekDefinition<CR>
+
+let mapleader=","
+
+nnoremap <leader>b :vsc Debug.ToggleBreakpoint<cr>
+
+nnoremap <leader>m :vsc Edit.NextMethod<cr>
+nnoremap <leader>M :vsc Edit.PreviousMethod<cr>
+
+nnoremap R :vsc Refactor.Rename<cr>
+
+" jump between compilation errors
+nnoremap <leader>e :vsc View.NextError<cr>
+nnoremap <leader>E :vsc View.PreviousError<cr>
+
+nnoremap gc :vsc Edit.ToggleLineComment<cr>
+nnoremap gC :vsc Edit.ToggleBlockComment<cr>
+vnoremap gc :vsc Edit.ToggleLineComment<cr>
+vnoremap gC :vsc Edit.ToggleBlockComment<cr>
+
+nnoremap <leader>td :vsc TestExplorer.DebugAllTestsInContext<cr>
+nnoremap <leader>tr :vsc TestExplorer.RunAllTestsInContext<cr>
+
+set clipboard=unnamed
+set ic
+
+:map <space> viw
+
+:nnoremap ' `
+:nnoremap ` '
+
+:nnoremap p p=`]`.
+
+noremap <leader>d ddO
+noremap <leader>s v$hc
+noremap <leader>a "a
+
+imap jj <Esc>
