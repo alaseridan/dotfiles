@@ -213,6 +213,9 @@ code --install-extension vscjava.vscode-java-test
 code --install-extension vscjava.vscode-maven
 code --install-extension VSpaceCode.whichkey
 
+#config git to get with the times and allow long file names
+git config --global core.longpaths true
+
 
 #--- Uninstall unecessary applications that come with Windows out of the box ---
 
