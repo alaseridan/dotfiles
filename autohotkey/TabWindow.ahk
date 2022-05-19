@@ -5,6 +5,19 @@ CustomName := "null"
 WinExes := {}
 WinTitles := {}
 
+~RControl Up::  
+If (A_PriorHotkey=A_ThisHotkey && A_TimeSincePriorHotkey<400)
+
+  If WinActive("ahk_class TscShellContainerClass") {
+    ; minimize RDP, activate desktop
+    WinMinimize, ahk_class TscShellContainerClass
+    WinActivate, ahk_class Shell_TrayWnd
+  } else if WinExist("ahk_class TscShellContainerClass") {
+    ; activate RDP
+    WinActivate, ahk_class TscShellContainerClass
+  } 
+Return
+
 !Pause::
 	Input, PressedKey, L1 T5
 	activeID := GetActiveWindow()
