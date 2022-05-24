@@ -1,0 +1,183 @@
+{
+    "workbench.colorTheme": "Default Dark Azure Data Studio",
+    "workbench.enablePreviewFeatures": true,
+    "datasource.connectionGroups": [
+        {
+            "name": "ROOT",
+            "id": "C777F06B-202E-4480-B475-FA416154D458"
+        },
+        {
+            "name": "Aggregator",
+            "id": "bac1b6a0-fdbb-48c2-9675-ccd0fd2e8c63",
+            "parentId": "C777F06B-202E-4480-B475-FA416154D458",
+            "color": "#A1634D",
+            "description": ""
+        },
+        {
+            "name": "Grading",
+            "id": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+            "parentId": "C777F06B-202E-4480-B475-FA416154D458",
+            "color": "#98AFC7",
+            "description": ""
+        }
+    ],
+    "datasource.connections": [
+        {
+            "options": {
+                "connectionName": "GradingDev",
+                "server": "irvn-gradb-d001",
+                "database": "Grading",
+                "authenticationType": "Integrated",
+                "user": "",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "Grading",
+                "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+                "databaseDisplayName": "Grading"
+            },
+            "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "c52b9f4b-a1b9-43ed-995b-50c2d87d95b8"
+        },
+        {
+            "options": {
+                "connectionName": "AggregatorDev",
+                "server": "ausw-rds-d001.cs4qvfvhmmvc.us-west-2.rds.amazonaws.com",
+                "database": "Aggregator",
+                "authenticationType": "SqlLogin",
+                "user": "nhallahan",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "Aggregator",
+                "groupId": "bac1b6a0-fdbb-48c2-9675-ccd0fd2e8c63",
+                "databaseDisplayName": "Aggregator"
+            },
+            "groupId": "bac1b6a0-fdbb-48c2-9675-ccd0fd2e8c63",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "b173722a-e924-44a7-adba-1ef2c55668ca"
+        },
+        {
+            "options": {
+                "connectionName": "AggregatorProd",
+                "server": "ausw-rds-p002.cs4qvfvhmmvc.us-west-2.rds.amazonaws.com",
+                "database": "Aggregator",
+                "authenticationType": "SqlLogin",
+                "user": "nhallahan",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "Aggregator",
+                "groupId": "bac1b6a0-fdbb-48c2-9675-ccd0fd2e8c63",
+                "databaseDisplayName": "Aggregator"
+            },
+            "groupId": "bac1b6a0-fdbb-48c2-9675-ccd0fd2e8c63",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "b0a767d3-11c3-4f2f-b9f5-1c66ffc1bf55"
+        },
+        {
+            "options": {
+                "connectionName": "GradingProd",
+                "server": "GradingDB",
+                "database": "Grading",
+                "authenticationType": "Integrated",
+                "user": "",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "Grading",
+                "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+                "databaseDisplayName": "Grading"
+            },
+            "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "b816137f-289d-4386-a5b3-929c2c89a340"
+        },
+        {
+            "options": {
+                "connectionName": "Grading8Dev",
+                "server": "irvn-webdb-d001",
+                "database": "Grading8",
+                "authenticationType": "Integrated",
+                "user": "",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "Grading8",
+                "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+                "databaseDisplayName": "Grading8"
+            },
+            "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "9d7028e8-7105-4083-bf34-7b572be3227a"
+        },
+        {
+            "options": {
+                "connectionName": "CollectorsMailerProd",
+                "server": "webdb",
+                "database": "CollectorsMailer",
+                "authenticationType": "Integrated",
+                "user": "",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "CollectorsMailer",
+                "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+                "databaseDisplayName": "CollectorsMailer"
+            },
+            "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "9d116354-b0b4-4c99-a0ca-cd71ab8d8281"
+        },
+        {
+            "options": {
+                "connectionName": "CollectorsMailerDev",
+                "server": "irvn-webdb-d001",
+                "database": "CollectorsMailer",
+                "authenticationType": "Integrated",
+                "user": "",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "CollectorsMailer",
+                "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+                "databaseDisplayName": "CollectorsMailer"
+            },
+            "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "61164f0f-be23-44e8-8a3a-f00c885ab520"
+        },
+        {
+            "options": {
+                "connectionName": "PCGSImagesDev(ImagesDB)",
+                "server": "irvn-navdb-d001",
+                "database": "PCGSImages",
+                "authenticationType": "Integrated",
+                "user": "",
+                "password": "",
+                "applicationName": "azdata",
+                "originalDatabase": "PCGSImages",
+                "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+                "databaseDisplayName": "PCGSImages"
+            },
+            "groupId": "d764bd42-4929-4103-8a91-e0ba80fb062b",
+            "providerName": "MSSQL",
+            "savePassword": true,
+            "id": "5d1e03b6-e922-4990-a2a1-60c883365653"
+        }
+    ],
+    "vim.easymotion": true,
+    "vim.leader": ",",
+    "vim.neovimUseConfigFile": true,
+    "vim.neovimConfigPath": "C:\\Users\\nhallahan\\AppData\\Local\\nvim\\init.vim",
+    "vim.useSystemClipboard": true,
+    "vim.vimrc.enable": true,
+    "vim.vimrc.path": "C:\\Users\\nhallahan\\_vimrc",
+    "vim.neovimPath": "C:\\tools\\neovim\\Neovim\\bin\\nvim.exe",
+    "vim.enableNeovim": true,
+    "queryEditor.tabColorMode": "fill",
+    "vscode-neovim.neovimExecutablePaths.win32": "C:\\tools\\neovim\\Neovim\\bin\\nvim.exe",
+    "vscode-neovim.neovimInitVimPaths.win32": "C:\\Users\\nhallahan\\AppData\\Local\\nvim\\init.vim",
+    "security.workspace.trust.untrustedFiles": "open"
+}
