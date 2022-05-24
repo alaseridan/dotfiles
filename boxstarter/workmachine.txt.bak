@@ -185,7 +185,6 @@ choco install nodejs-lts.install -y
 choco install obsidian -y
 choco install pandoc -y
 choco install python3  -y
-choco install microsoft-windows-terminal -y
 
 #--- Install python packages ---#
 pip install --upgrade pip

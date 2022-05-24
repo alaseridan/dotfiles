@@ -23,6 +23,14 @@ vnoremap gC :vsc Edit.ToggleBlockComment<cr>
 nnoremap <leader>td :vsc TestExplorer.DebugAllTestsInContext<cr>
 nnoremap <leader>tr :vsc TestExplorer.RunAllTestsInContext<cr>
 
+"Jump to word beginning in current line
+nmap <leader><leader>w :vsc Tools.InvokePeasyMotionLineJumpToWordBegining<CR>
+"Jump to word ending in current line
+nmap <leader><leader>e :vsc Tools.InvokePeasyMotionLineJumpToWordEnding<CR>
+
+"Two char search mode:
+nmap <leader><leader>c :vsc Tools.InvokePeasyMotionTwoCharJump<CR>
+
 set clipboard=unnamed
 set ic
 

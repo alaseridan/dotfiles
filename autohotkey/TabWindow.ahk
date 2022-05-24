@@ -1,9 +1,19 @@
+#Persistent
 WinIDs := {}
 WinNames := {}
 WindowName := TabWindowGui
 CustomName := "null"
 WinExes := {}
 WinTitles := {}
+ListenList := {}
+
+;listen for new windows, works but not useful right now
+;Gui +LastFound
+;hWnd := WinExist()
+;DllCall("RegisterShellHookWindow", UInt,hWnd)
+;OnMessage(DllCall("RegisterWindowMessage", Str,"SHELLHOOK"), "ShellMessage")
+;return
+
 
 ~RControl Up::  
 If (A_PriorHotkey=A_ThisHotkey && A_TimeSincePriorHotkey<400)
@@ -39,6 +49,7 @@ SwitchToWindow()
 	;}
 	WinID := WinIDs[PressedKey]
 	WinActivate, ahk_id %WinID%
+	CheckIfTitleChanged(PressedKey)
 	Gui, Destroy
 	Return
 }
@@ -123,9 +134,10 @@ LoadIni()
 	Loop Parse, Sections, `n
 	{
 		global WinExes
+		global WinIDs
 		sectionName := A_LoopField
 		;if section is already mapped then skip it
-		if (WinExes.haskey(sectionName))
+		if (WinExes.haskey(sectionName) and WinExist("ahk_id" WinIDs[sectionName]))
 		{
 			continue
 		}
@@ -161,6 +173,10 @@ LoadIni()
 						IniRead, mappedName, mappings.ini, %sectionName%, name
 						AddWindowTab(sectionName, id, mappedName, process, title)
 					}
+					else ;add to list of processes to "listen" for
+					{
+						;AddToListenList(sectionName, process)
+					}
 				}
 			}
 			else if (windowIds = 1)
@@ -172,6 +188,12 @@ LoadIni()
 				IniRead, mappedName, mappings.ini, %sectionName%, name
 				AddWindowTab(sectionName, id, mappedName, process, title)
 			}
+		}
+		else
+		{
+			
+			IniRead, mappedTitle, mappings.ini, %sectionName%, title
+			;AddToListenList(sectionName, process)
 		}
 	}
 	Gui, Destroy
@@ -190,8 +212,6 @@ SaveIni()
 		IniWrite, %value%, mappings.ini, %key%, title
 	for key, value in WinNames
 		IniWrite, %value%, mappings.ini, %key%, name
-	for key, value in WinIDs
-		IniWrite, %value%, mappings.ini, %key%, id
 
 	Gui, Destroy
 	Return
@@ -218,6 +238,76 @@ AddWindowTab(key, id, name, process, title)
 	WinExes[key] := process
 	WinTitles[key] := title
 
-	TrayTip, Key set, %key% set to %name%, 2, 16
+	;RemoveFromListenList(title)
+
+	TrayTip, Key set, %key% set to %name%, 0.5, 16
 	return
 }
+
+CheckIfTitleChanged(key)
+{
+	global WinTitles
+	global WinIDs
+	winID := WinIDs[key]
+	oldTitle := WinTitles[key]
+	WinGetTitle, newTitle, ahk_id %winID%
+
+	if (oldTitle != newTitle and StrLen(newTitle) > 0)
+	{
+		;TrayTip, Titled Changed, %newTitle%, 1, 16
+		WinTitles[key] := newTitle
+
+		IniWrite, %newTitle%, mappings.ini, %key%, title
+	}
+}
+
+
+;AddToListenList(key, process)
+;{
+;	global ListenList
+;	;ListenObj := {}
+;	;ListenObj.Key := key
+;	;ListenObj.Process := process
+;	if (ListenList.haskey(process))
+;		return
+;	ListenList[process] := key
+;	TrayTip, Listen for , %process%, 1, 16
+;	return
+;}
+;
+;RemoveFromListenList(process)
+;{
+;	global ListenList
+;	ListenList.Delete(process)
+;	return
+;}
+;
+;LoadListened(id, process, title)
+;{
+;	TrayTip, Checking for , %process%, 1, 16
+;	global ListenList
+;	if (ListenList.haskey(process))
+;	{
+;		TrayTip, Loading mapping for  , %process%, 1, 16
+;		IniRead, name, mappings.ini, ListenList[process], name
+;		AddWindowTab(ListenList[process], id, name, process, title)
+;		ListenList.Delete(process)
+;	}
+;	return
+;}
+;
+;ShellMessage(wP,lP)
+;{
+;	;TrayTip, Shell Message, wp = %wP%, 1, 16
+;	if(wP = 1) ; window created, 4 window activated, 16 closed
+;	{
+;		newID := lP
+;		WinGetTitle, Title, ahk_id %newID%
+;		if(Title = "TabWindow.ahk")
+;			return
+;		;TrayTip, New Window , %Title% has entered the chat, 1, 16
+;		WinGet, process, ProcessName, ahk_id %newID%
+;		LoadListened(newID, process, Title)
+;		return
+;	}
+;}
