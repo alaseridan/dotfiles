@@ -1,11 +1,11 @@
-#Persistent
+;#Persistent
 WinIDs := {}
 WinNames := {}
 WindowName := TabWindowGui
 CustomName := "null"
 WinExes := {}
 WinTitles := {}
-ListenList := {}
+WinLastPosList := {}
 
 ;listen for new windows, works but not useful right now
 ;Gui +LastFound
@@ -14,6 +14,24 @@ ListenList := {}
 ;OnMessage(DllCall("RegisterWindowMessage", Str,"SHELLHOOK"), "ShellMessage")
 ;return
 
+;win+c to center a window, use the built in win+down to move it back
+#c::
+global WinLastPosList
+WinExist("A")
+activeID := GetActiveWindow()
+WinGetPos, posX, posY, sizeX, sizeY
+WinLastPosList[activeID] := [posX, posY]
+WinMove, (A_ScreenWidth/2)-(sizeX/2), 0 ;(A_ScreenHeight/2)-(sizeY/2)
+Return
+
+;win+shift+c to restore to last known pos
+#+c::
+global WinLastPosList
+WinExist("A")
+activeID := GetActiveWindow()
+lastPos := WinLastPosList[activeID]
+WinMove, lastPos.1, lastPos.2
+Return
 
 ~RControl Up::  
 If (A_PriorHotkey=A_ThisHotkey && A_TimeSincePriorHotkey<400)
@@ -28,16 +46,35 @@ If (A_PriorHotkey=A_ThisHotkey && A_TimeSincePriorHotkey<400)
   } 
 Return
 
-!Pause::
+$F13::
+$Pause::
+if !Ta
+  SetTimer, Ta, -200
+Ta++
+Return
+Ta:
+if Ta = 1
+  OpenTabWindow()
+else if Ta = 2
+  AssignTabWindow()
+Ta = 
+Return
+
+!F13::AssignTabWindow()
+
+
+AssignTabWindow()
+{
 	Input, PressedKey, L1 T5
 	activeID := GetActiveWindow()
 	activeName := GetActiveWindowName()
 	activeProcess := GetActiveWindowExe()
 	activeTitle := GetActiveWindowTitle()
 	AddWindowTab(PressedKey, activeID, activeName, activeProcess, activeTitle)
-return
+  return
+}
 
-Pause::OpenTabWindow()
+;F13::OpenTabWindow()
 	
 SwitchToWindow()
 {
@@ -173,10 +210,10 @@ LoadIni()
 						IniRead, mappedName, mappings.ini, %sectionName%, name
 						AddWindowTab(sectionName, id, mappedName, process, title)
 					}
-					else ;add to list of processes to "listen" for
-					{
-						;AddToListenList(sectionName, process)
-					}
+					;else
+					;{
+					;	MsgBox, %title% `nnot found in %process% `nLooking for `n%mappedTitle%
+					;}
 				}
 			}
 			else if (windowIds = 1)
@@ -188,12 +225,6 @@ LoadIni()
 				IniRead, mappedName, mappings.ini, %sectionName%, name
 				AddWindowTab(sectionName, id, mappedName, process, title)
 			}
-		}
-		else
-		{
-			
-			IniRead, mappedTitle, mappings.ini, %sectionName%, title
-			;AddToListenList(sectionName, process)
 		}
 	}
 	Gui, Destroy
@@ -238,8 +269,6 @@ AddWindowTab(key, id, name, process, title)
 	WinExes[key] := process
 	WinTitles[key] := title
 
-	;RemoveFromListenList(title)
-
 	TrayTip, Key set, %key% set to %name%, 0.5, 16
 	return
 }
@@ -252,7 +281,7 @@ CheckIfTitleChanged(key)
 	oldTitle := WinTitles[key]
 	WinGetTitle, newTitle, ahk_id %winID%
 
-	if (oldTitle != newTitle and StrLen(newTitle) > 0)
+	if (oldTitle != newTitle)
 	{
 		;TrayTip, Titled Changed, %newTitle%, 1, 16
 		WinTitles[key] := newTitle
@@ -261,44 +290,9 @@ CheckIfTitleChanged(key)
 	}
 }
 
-
-;AddToListenList(key, process)
-;{
-;	global ListenList
-;	;ListenObj := {}
-;	;ListenObj.Key := key
-;	;ListenObj.Process := process
-;	if (ListenList.haskey(process))
-;		return
-;	ListenList[process] := key
-;	TrayTip, Listen for , %process%, 1, 16
-;	return
-;}
-;
-;RemoveFromListenList(process)
-;{
-;	global ListenList
-;	ListenList.Delete(process)
-;	return
-;}
-;
-;LoadListened(id, process, title)
-;{
-;	TrayTip, Checking for , %process%, 1, 16
-;	global ListenList
-;	if (ListenList.haskey(process))
-;	{
-;		TrayTip, Loading mapping for  , %process%, 1, 16
-;		IniRead, name, mappings.ini, ListenList[process], name
-;		AddWindowTab(ListenList[process], id, name, process, title)
-;		ListenList.Delete(process)
-;	}
-;	return
-;}
-;
 ;ShellMessage(wP,lP)
 ;{
-;	;TrayTip, Shell Message, wp = %wP%, 1, 16
+;	TrayTip, Shell Message, wp = %wP%, 1, 16
 ;	if(wP = 1) ; window created, 4 window activated, 16 closed
 ;	{
 ;		newID := lP
@@ -306,8 +300,10 @@ CheckIfTitleChanged(key)
 ;		if(Title = "TabWindow.ahk")
 ;			return
 ;		;TrayTip, New Window , %Title% has entered the chat, 1, 16
-;		WinGet, process, ProcessName, ahk_id %newID%
-;		LoadListened(newID, process, Title)
 ;		return
+;	}
+;	if(wP = 16)
+;	{
+;		
 ;	}
 ;}
