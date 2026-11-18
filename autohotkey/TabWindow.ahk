@@ -14,6 +14,9 @@ WinLastPosList := {}
 ;OnMessage(DllCall("RegisterWindowMessage", Str,"SHELLHOOK"), "ShellMessage")
 ;return
 
+; Map F17 to behave like the Windows key
+F17::LWin
+
 ;win+c to center a window, use the built in win+down to move it back
 #c::
 global WinLastPosList
